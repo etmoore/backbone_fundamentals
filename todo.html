@@ -10,17 +10,28 @@
   <script src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
   <script src="http://documentcloud.github.com/backbone/backbone-min.js"></script>
   <script>
-    var Person = new Backbone.Model({name: 'Jeremy'});
+  var Todo = Backbone.Model.extend({
+    defaults: {
+      completed: false
+    },
 
-    Person.validate = function(attrs){
-      if (!attrs.name) {
-        return 'I need your name';
+    validate: function (attribs){
+      if(attribs.title === undefined){
+        return "Remember to set a title for your todo.";
       }
-    };
+    },
 
-    Person.set({name: 'Samuel'});
-    console.log(Person.get('name'));
-    Person.unset('name', {validate: true});
+    initialize: function(){
+      console.log('This model has been initialized.');
+      this.on("invalid", function(model, error){
+        console.log(error);
+      });
+    }
+  });
+
+  var myTodo = new Todo();
+  myTodo.set('completed', true, {validate: true});
+  console.log('completed: ' + myTodo.get('completed'));
 
   </script>
 
