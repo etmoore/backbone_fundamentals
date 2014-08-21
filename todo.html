@@ -22,13 +22,17 @@
     var Todo = Backbone.Model.extend({
       defaults: {
         title: '',
-        assignee: 'Evan',
         completed: false
       }
     });
 
-    var todo = new Todo({title: 'go to Austria.'})
-    console.log(todo.pick('title', 'assignee'));
+    var TodosCollection = Backbone.Collection.extend({
+      model: Todo,
+      url: '/todos'
+    });
+
+    var todos = new TodosCollection();
+    todos.fetch(); // sends HTTP GET to /todos
 
   </script>
 
