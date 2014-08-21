@@ -19,17 +19,27 @@
   <script src="http://documentcloud.github.com/backbone/backbone-min.js"></script>
   <script>
 
-    var TodosCollection = new Backbone.Collection();
+    // Define an object with two counters
+    var TodoCounter = { counterA: 0, counterB: 0 };
+    // Mix in Backbone Events
+    _.extend(TodoCounter, Backbone.Events);
 
-    TodosCollection.on("add", function(todo) {
-      console.log("I should " + todo.get("title") + ". Have I done it before? " + (todo.get("completed") ? 'Yeah!': 'No.'));
-    });
+    var incrA = function(){
+      TodoCounter.counterA += 1;
+      // TodoCounter.trigger('event');
+    };
 
-    TodosCollection.add([
-      { title: 'go to Jamaica', completed: false },
-      { title: 'go to China', completed: false },
-      { title: 'go to Disneyland', completed: true }
-    ]);
+    var incrB = function(){
+      TodoCounter.counterB += 1;
+    }
+
+    TodoCounter.once('event', incrA);
+    TodoCounter.once('event', incrB);
+
+    TodoCounter.trigger('event');
+
+    console.log(TodoCounter.counterA === 1);
+    console.log(TodoCounter.counterB === 1);
 
   </script>
 
