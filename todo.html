@@ -19,31 +19,44 @@
   <script src="http://documentcloud.github.com/backbone/backbone-min.js"></script>
   <script>
 
-    var TodosCollection = new Backbone.Collection();
+    var Todos = new Backbone.Collection();
 
-    TodosCollection.add([
-      { id: 1, title: 'go to Jamaica.', completed: false },
-      { id: 2, title: 'go to China.', completed: false },
-      { id: 3, title: 'go to Disneyland.', completed: true }
+    Todos.add([
+      { title: 'go to Belgium.', completed: false },
+      { title: 'go to China.', completed: false },
+      { title: 'go to Austria.', completed: true }
     ]);
 
-    TodosCollection.on("add", function(model) {
-      console.log("Added " + model.get('title'));
+    // forEach()
+    Todos.forEach(function(model){
+      console.log(model.get('title'));
     });
 
-    TodosCollection.on("remove", function(model) {
-      console.log("Removed " + model.get('title'));
+    // sortBy()
+    var sortedByAlphabet = Todos.sortBy(function(todo) {
+      return todo.get("title").toLowerCase();
     });
 
-    TodosCollection.on("change:completed", function(model) {
-      console.log("Completed " + model.get('title'));
+    console.log(" - Now sorted: ");
+
+    sortedByAlphabet.forEach(function(model) {
+      console.log(model.get('title'));
     });
 
-    TodosCollection.set([
-      {id: 1, title: 'go to Jamaica.', completed: true },
-      {id: 2, title: 'go to China.', completed: false },
-      {id: 4, title: 'go to Disney World.', completed: false }
-    ]);
+    // map()
+    var count = 1;
+    console.log(Todos.map(function(model){
+      return count++ + ". " + model.get('title');
+    }));
+
+    // min()/max()
+    Todos.max(function(model){
+      return model.id;
+    }).id;
+
+    Todos.min(function(model){
+      return model.id;
+    }).id;
 
   </script>
 
