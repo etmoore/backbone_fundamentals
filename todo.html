@@ -19,20 +19,20 @@
   <script src="http://documentcloud.github.com/backbone/backbone-min.js"></script>
   <script>
 
-    var Todo = Backbone.Model.extend({
-      defaults: {
-        title: '',
-        completed: false
-      }
+    var ourObject = {};
+
+    _.extend(ourObject, Backbone.Events);
+
+    ourObject.on('dance', function(msg){
+      console.log('We triggered ' + msg);
     });
 
-    var TodosCollection = Backbone.Collection.extend({
-      model: Todo,
-      url: '/todos'
+    ourObject.on('laugh', function(adjective){
+      console.log('And we laughed ' + adjective);
     });
 
-    var todos = new TodosCollection();
-    todos.fetch(); // sends HTTP GET to /todos
+    ourObject.trigger('dance', 'our event');
+    ourObject.trigger('laugh', 'loudly');
 
   </script>
 
