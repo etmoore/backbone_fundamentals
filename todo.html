@@ -19,32 +19,17 @@
   <script src="http://documentcloud.github.com/backbone/backbone-min.js"></script>
   <script>
 
-  var Todo = Backbone.Model.extend({
-    defaults: {
-      title: '',
-      completed: false
-    }
-  });
+    var TodosCollection = new Backbone.Collection();
 
-  var TodosCollection = Backbone.Collection.extend({
-    model: Todo
-  });
+    TodosCollection.on("add", function(todo) {
+      console.log("I should " + todo.get("title") + ". Have I done it before? " + (todo.get("completed") ? 'Yeah!': 'No.'));
+    });
 
-  var a = new Todo({ title: 'Go to Jamaica.'}),
-      b = new Todo({ title: 'Go to China.'}),
-      c = new Todo({ title: 'Go to Disneyland.'});
-
-  var todos = new TodosCollection([a,b]);
-  console.log("Collection size: " + todos.length);
-
-  todos.add(c);
-  console.log("Collection size: " + todos.length);
-
-
-  console.log(todos.toJSON());
-
-  todos.remove(c);
-  console.log("Collection size: " + todos.length);
+    TodosCollection.add([
+      { title: 'go to Jamaica', completed: false },
+      { title: 'go to China', completed: false },
+      { title: 'go to Disneyland', completed: true }
+    ]);
 
   </script>
 
