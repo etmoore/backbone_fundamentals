@@ -10,28 +10,17 @@
   <script src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
   <script src="http://documentcloud.github.com/backbone/backbone-min.js"></script>
   <script>
-    var Todo = Backbone.Model.extend({
-      defaults: {
-        title: '',
-        completed: false
-      },
-      initialize: function() {
-        console.log('This model has been initialized.');
-        this.on('change:title', function(){
-          console.log('Title value for this model has changed.');
-        });
-      },
+    var Person = new Backbone.Model({name: 'Jeremy'});
 
-      setTitle: function(newTitle){
-        this.set({ title: newTitle });
+    Person.validate = function(attrs){
+      if (!attrs.name) {
+        return 'I need your name';
       }
-    });
-    var myTodo = new Todo();
-    myTodo.set('title', 'Check what\'s logged.');
-    myTodo.setTitle('Go fishing on Sunday.');
+    };
 
-    myTodo.set('completed', true);
-    console.log('Todo set as completed: ' + myTodo.get('completed'));
+    Person.set({name: 'Samuel'});
+    console.log(Person.get('name'));
+    Person.unset('name', {validate: true});
 
   </script>
 
